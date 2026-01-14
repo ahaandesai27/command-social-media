@@ -1,0 +1,7 @@
+* linguist-detectable=true
+
+**/*.html linguist-detectable=false
+**/*.css linguist-detectable=false
+**/*.md linguist-detectable=false
+**/*.json linguist-detectable=false
+**/*.svg linguist-detectable=false
