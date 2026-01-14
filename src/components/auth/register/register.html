@@ -1,0 +1,74 @@
+<div class="auth-container">
+  <div class="auth-panel">
+    <div class="auth-header">
+      <div class="auth-icon">
+        <span class="terminal-symbol">+</span>
+      </div>
+      <h1 class="auth-title">System Registration</h1>
+      <p class="auth-subtitle">Initialize new user profile</p>
+    </div>
+
+    <form class="auth-form" [formGroup]="form" (ngSubmit)="submit()">
+
+      <div class="form-group">
+        <label class="form-label">Username</label>
+        <div class="input-wrapper">
+          <input
+            type="text"
+            class="form-input"
+            placeholder="neural_user_001"
+            autocomplete="username"
+            formControlName="username"
+          >
+          <div class="input-glow"></div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <div class="input-wrapper">
+          <input
+            type="password"
+            class="form-input"
+            placeholder="••••••••••••"
+            autocomplete="new-password"
+            formControlName="password"
+          >
+          <div class="input-glow"></div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Confirm Password</label>
+        <div class="input-wrapper">
+          <input
+            type="password"
+            class="form-input"
+            placeholder="••••••••••••"
+            autocomplete="new-password"
+            formControlName="confirmPassword"
+          >
+          <div class="input-glow"></div>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button
+          type="submit"
+          class="auth-button primary"
+          [disabled]="form.invalid"
+        >
+          Initialize Profile
+        </button>
+      </div>
+
+    </form>
+
+    <div class="auth-footer">
+      <p class="auth-link-text">
+        Already registered? 
+        <a href="/login" class="auth-link">Login</a>
+      </p>
+    </div>
+  </div>
+</div>

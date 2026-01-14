@@ -1,0 +1,79 @@
+<div class="not-found-container">
+  <!-- Error Display Section -->
+  <section class="error-section">
+    <div class="error-content">
+      <div class="error-code">
+        <span class="error-number">404</span>
+        <div class="error-glitch">404</div>
+      </div>
+      <h1 class="error-title">COMMAND NOT FOUND</h1>
+      <p class="error-subtitle">The requested resource does not exist in our system</p>
+      
+      <div class="terminal-output">
+        <div class="terminal-header">
+          <div class="terminal-controls">
+            <span class="control-dot red"></span>
+            <span class="control-dot yellow"></span>
+            <span class="control-dot green"></span>
+          </div>
+          <span class="terminal-title">ERROR LOG</span>
+        </div>
+        <div class="terminal-body">
+          <div class="error-line">
+            <span class="prompt">></span>
+            <span class="command-text">navigate {{getCurrentPath()}}</span>
+          </div>
+          <div class="error-response">
+            <span class="error-symbol">✗</span>
+            <span class="error-message">Error 404: Path not found in routing table</span>
+          </div>
+          <div class="suggestion-line">
+            <span class="suggestion-symbol">?</span>
+            <span class="suggestion-text">Try: go home | show profile | help</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Navigation Options Section -->
+  <section class="navigation-section">
+    <h2 class="section-title">Available Navigation Commands</h2>
+    <div class="commands-grid">
+      <div class="command-option" (click)="goHome()">
+        <div class="command-icon">🏠</div>
+        <code class="command-syntax">go home</code>
+        <span class="command-desc">Return to the homepage</span>
+      </div>
+      <div class="command-option" (click)="goToProfile()">
+        <div class="command-icon">👤</div>
+        <code class="command-syntax">show profile</code>
+        <span class="command-desc">View your profile page</span>
+      </div>
+      <div class="command-option" (click)="showHelp()">
+        <div class="command-icon">❓</div>
+        <code class="command-syntax">help</code>
+        <span class="command-desc">Show available commands</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick Actions Section -->
+  <section class="actions-section">
+    <div class="actions-container">
+      <button class="primary-btn" (click)="goHome()">
+        <span class="btn-icon">></span>
+        RETURN HOME
+      </button>
+      <button class="secondary-btn" (click)="goBack()">
+        <span class="btn-icon">←</span>
+        GO BACK
+      </button>
+    </div>
+  </section>
+
+  <!-- Background Effects -->
+  <div class="bg-effects">
+    <div class="grid-lines"></div>
+  </div>
+</div>

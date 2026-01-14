@@ -1,0 +1,48 @@
+<div class="user-posts-container">
+  <!-- Section Title -->
+  <div class="posts-header">
+    <h3 class="section-title">USER_POSTS</h3>
+    <button class="refresh-btn" (click)="refresh()" [disabled]="loading">
+      <span class="refresh-icon">🔄</span>
+      Refresh
+    </button>
+  </div>
+
+  <!-- Posts Content -->
+  @if (loading && posts.length === 0) {
+    <!-- Initial Loading State -->
+    <div class="loading-state">
+      <div class="loader"></div>
+      <span>Loading posts...</span>
+    </div>
+  } @else if (posts.length > 0) {
+    <!-- Posts List -->
+    <div class="posts-list">
+      @for (post of posts; track post.id) {
+        <app-post [postData]="post"></app-post>
+      }
+    </div>
+    
+    <!-- Load More Button -->
+    @if (hasMorePosts) {
+      <div class="load-more-container">
+        <button 
+          class="load-more-btn"
+          (click)="loadMorePosts()"
+          [disabled]="loading">
+          @if (loading) {
+            <span class="btn-spinner"></span>
+          }
+          {{ loading ? 'Loading...' : 'Load More Posts' }}
+        </button>
+      </div>
+    }
+  } @else {
+    <!-- Empty State -->
+    <div class="empty-state">
+      <span class="empty-icon">📝</span>
+      <h4>No Posts Yet</h4>
+      <p>This user hasn't posted anything yet.</p>
+    </div>
+  }
+</div>

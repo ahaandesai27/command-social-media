@@ -1,0 +1,145 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap');
+
+.comment-item {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(0, 212, 255, 0.1);
+  border-radius: 8px;
+  padding: 20px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.comment-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent, rgba(0, 212, 255, 0.02), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.comment-item:hover {
+  border-color: rgba(0, 212, 255, 0.3);
+  transform: translateX(4px);
+}
+
+.comment-item:hover::before {
+  opacity: 1;
+}
+
+.comment-header {
+  margin-bottom: 12px;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid var(--primary-blue);
+  background: var(--primary-bg);
+}
+
+.user-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.username {
+  font-family: 'Share Tech Mono', monospace;
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.timestamp {
+  font-family: 'Share Tech Mono', monospace;
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+}
+
+.comment-content {
+  margin-bottom: 16px;
+  margin-left: 52px;
+}
+
+.comment-content p {
+  font-family: 'Share Tech Mono', monospace;
+  color: var(--text-primary);
+  line-height: 1.6;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.comment-actions {
+  display: flex;
+  gap: 12px;
+  margin-left: 52px;
+}
+
+.action-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-family: 'Share Tech Mono', monospace;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.action-btn.small {
+  font-size: 0.8rem;
+}
+
+.action-btn:hover {
+  color: var(--primary-blue);
+  background: rgba(0, 212, 255, 0.1);
+}
+
+.action-btn.active {
+  color: var(--primary-blue);
+}
+
+.action-btn.active .icon {
+  text-shadow: 0 0 6px var(--primary-blue);
+}
+
+.action-btn .icon {
+  font-size: 0.95rem;
+}
+
+.count {
+  font-weight: 600;
+  font-size: 0.75rem;
+}
+
+@media (max-width: 768px) {
+  .comment-item {
+    padding: 16px;
+  }
+  
+  .comment-content,
+  .comment-actions {
+    margin-left: 0;
+  }
+  
+  .user-info {
+    margin-bottom: 8px;
+  }
+}

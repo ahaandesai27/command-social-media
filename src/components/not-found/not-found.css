@@ -1,0 +1,437 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+.not-found-container {
+  background: var(--primary-bg);
+  color: var(--text-primary);
+  font-family: 'Rajdhani', sans-serif;
+  min-height: calc(100vh - 60px); /* Account for brand header */
+  position: relative;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.not-found-container::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(255, 0, 0, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(0, 212, 255, 0.05) 0%, transparent 50%),
+    linear-gradient(45deg, transparent 30%, rgba(255, 0, 0, 0.02) 50%, transparent 70%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Error Section */
+.error-section {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.error-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.error-code {
+  position: relative;
+  margin-bottom: 40px;
+}
+
+.error-number {
+  font-family: 'Orbitron', monospace;
+  font-size: 8rem;
+  font-weight: 900;
+  color: var(--primary-blue);
+  text-shadow: 0 0 30px rgba(0, 212, 255, 0.5);
+  position: relative;
+  z-index: 2;
+}
+
+.error-glitch {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Orbitron', monospace;
+  font-size: 8rem;
+  font-weight: 900;
+  color: #ff0040;
+  text-shadow: 0 0 30px rgba(255, 0, 64, 0.5);
+  animation: glitch 2s infinite;
+  z-index: 1;
+}
+
+@keyframes glitch {
+  0%, 90%, 100% {
+    opacity: 0;
+    transform: translateX(-50%) skew(0deg);
+  }
+  91%, 94% {
+    opacity: 0.8;
+    transform: translateX(-52%) skew(-2deg);
+  }
+  92%, 93% {
+    opacity: 0.6;
+    transform: translateX(-48%) skew(2deg);
+  }
+}
+
+.error-title {
+  font-family: 'Orbitron', monospace;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0 0 20px;
+  background: linear-gradient(45deg, #ff0040, var(--primary-blue));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+}
+
+.error-subtitle {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 1.2rem;
+  color: var(--text-muted);
+  margin: 0 0 40px;
+  letter-spacing: 1px;
+}
+
+/* Terminal Output */
+.terminal-output {
+  background: var(--accent-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 40px 0;
+  box-shadow: 0 0 30px rgba(255, 0, 64, 0.1);
+}
+
+.terminal-header {
+  background: var(--secondary-bg);
+  padding: 15px 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.terminal-controls {
+  display: flex;
+  gap: 8px;
+}
+
+.control-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.control-dot.red { background: #ff5f57; }
+.control-dot.yellow { background: #ffbd2e; }
+.control-dot.green { background: #28ca42; }
+
+.terminal-title {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.terminal-body {
+  padding: 30px;
+  font-family: 'Share Tech Mono', monospace;
+}
+
+.error-line, .suggestion-line {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.prompt {
+  color: var(--success);
+  font-weight: bold;
+}
+
+.command-text {
+  color: var(--primary-blue);
+  font-size: 1.1rem;
+}
+
+.error-response {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-left: 20px;
+  margin-bottom: 15px;
+}
+
+.error-symbol {
+  color: #ff0040;
+  font-weight: bold;
+}
+
+.error-message {
+  color: #ff0040;
+  font-size: 0.9rem;
+}
+
+.suggestion-symbol {
+  color: var(--warning);
+  font-weight: bold;
+}
+
+.suggestion-text {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+/* Navigation Section */
+.navigation-section {
+  padding: 60px 20px;
+  background: var(--secondary-bg);
+  border-top: 1px solid var(--border-color);
+}
+
+.section-title {
+  font-family: 'Orbitron', monospace;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary-blue);
+  margin-bottom: 40px;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  position: relative;
+}
+
+.section-title::before {
+  content: '>';
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: -30px;
+  color: var(--success);
+  font-size: 1.2rem;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+.commands-grid {
+  max-width: 800px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+}
+
+.command-option {
+  background: var(--accent-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 30px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.command-option:hover {
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+  transform: translateY(-5px);
+}
+
+.command-icon {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.command-syntax {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 1rem;
+  color: var(--primary-blue);
+  background: var(--primary-bg);
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  display: inline-block;
+}
+
+.command-desc {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+/* Actions Section */
+.actions-section {
+  padding: 40px 20px;
+}
+
+.actions-container {
+  max-width: 400px;
+  margin: 0 auto;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.primary-btn, .secondary-btn {
+  font-family: 'Orbitron', monospace;
+  font-weight: 700;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+}
+
+.primary-btn {
+  background: linear-gradient(45deg, var(--primary-blue), var(--secondary-blue));
+  color: white;
+}
+
+.primary-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0, 212, 255, 0.3);
+}
+
+.secondary-btn {
+  background: transparent;
+  color: var(--text-primary);
+  border: 2px solid var(--border-color);
+}
+
+.secondary-btn:hover {
+  border-color: var(--primary-blue);
+  background: rgba(0, 212, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.btn-icon {
+  font-size: 1.1rem;
+}
+
+/* Background Effects */
+.bg-effects {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.grid-lines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: grid-move 20s linear infinite;
+}
+
+@keyframes grid-move {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(50px, 50px); }
+}
+
+.floating-code {
+  position: absolute;
+  bottom: 10%;
+  right: 5%;
+  opacity: 0.1;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--primary-blue);
+  transform: rotate(-15deg);
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: rotate(-15deg) translateY(0); }
+  50% { transform: rotate(-15deg) translateY(-20px); }
+}
+
+.code-snippet {
+  white-space: pre-line;
+  line-height: 1.4;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .error-number, .error-glitch {
+    font-size: 5rem;
+  }
+  
+  .error-title {
+    font-size: 1.8rem;
+  }
+  
+  .commands-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .actions-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .primary-btn, .secondary-btn {
+    width: 200px;
+    justify-content: center;
+  }
+  
+  .floating-code {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .error-section {
+    padding: 40px 20px;
+  }
+  
+  .navigation-section {
+    padding: 40px 20px;
+  }
+  
+  .command-option {
+    padding: 20px;
+  }
+}

@@ -1,0 +1,25 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Vars dont work in components, must define in global styles*/
+:root {
+  --primary-bg: #0a0a0a;
+  --secondary-bg: #101010;
+  --accent-bg: #0f1419;
+  --primary-blue: #00d4ff;
+  --secondary-blue: #0099cc;
+  --dark-blue: #003366;
+  --text-primary: #ffffff;
+  --text-secondary: #cccccc;
+  --text-muted: #888888;
+  --border-color: #333333;
+  --glow-blue: #00d4ff;
+  --success: #00ff88;
+  --warning: #ffaa00;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    padding-top: 60px; /* Account for fixed brand header */
+    background-color: #0a0a0a;
+}

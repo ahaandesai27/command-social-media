@@ -1,0 +1,84 @@
+<div class="brand-header">
+  <div class="brand-content">
+    <!-- Mobile Menu Button -->
+    <button class="mobile-menu-btn" (click)="onToggleSidebar()">
+      <div class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </button>
+
+    <div class="brand-icon" (click)="onToggleCommand()">
+      <span class="terminal-symbol">></span>
+    </div>
+    <div class="brand-text">
+      <span class="brand-name">COMMAND SOCIAL</span>
+      <span class="brand-version">v1.0</span>
+    </div>
+  </div>
+
+  <div class="header-actions">
+    <div class="status-indicator">
+      <div class="status-dot"></div>
+      <span class="status-text">ONLINE</span>
+    </div>
+  </div>
+</div>
+
+<!-- Sidebar -->
+@if (showSidebar) {
+<div class="sidebar-backdrop" (click)="onBackdropClick($event)">
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-brand">
+        <div class="brand-icon-small">
+          <span class="terminal-symbol">></span>
+        </div>
+        <span class="sidebar-title">NAVIGATION</span>
+      </div>
+      <button class="close-sidebar-btn" (click)="onCloseSidebar()">
+        <span class="close-icon">✕</span>
+      </button>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <span class="nav-section-title">MAIN</span>
+        <button class="nav-item" (click)="onNavigate('/')">
+          <span class="nav-label">Home</span>
+        </button>
+        <button class="nav-item" (click)="onNavigate('/search')">
+          <span class="nav-label">Search</span>
+        </button>
+        <button class="nav-item" (click)="onNavigate('/profile')">
+          <span class="nav-label">Profile</span>
+        </button>
+      </div>
+
+      <div class="nav-section">
+        <span class="nav-section-title">CONTENT</span>
+        <button class="nav-item" (click)="onNavigate('/posts')">
+          <span class="nav-label">All Posts</span>
+        </button>
+        <button class="nav-item" (click)="onNavigate('/posts/create')">
+          <span class="nav-label">Create Post</span>
+        </button>
+      </div>
+
+      <div class="nav-section">
+        <span class="nav-section-title">ACCOUNT</span>
+        <button class="nav-item" (click)="onNavigate('/edit-profile')">
+          <span class="nav-label">Edit Profile</span>
+        </button>
+        <button class="nav-item" (click)="onNavigate('/login')">
+          <span class="nav-label">Login</span>
+        </button>
+        <button class="nav-item" (click)="onNavigate('/register')">
+          <span class="nav-label">Register</span>
+        </button>
+      </div>
+    </nav>
+  </div>
+</div>
+}

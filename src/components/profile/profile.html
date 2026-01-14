@@ -1,0 +1,142 @@
+@if (profileNotFound) {
+  <div class="profile-not-found">
+    <div class="error-container">
+      <div class="error-icon">🔍</div>
+      <h2 class="error-title">// Profile Not Found</h2>
+      <p class="error-message">The user you're looking for doesn't exist or has been deactivated.</p>
+      <div class="error-code">ERROR_404: USER_NOT_FOUND</div>
+      <a href="/search" class="search-link">
+        <span class="search-icon">🔎</span>
+        Search for other users
+      </a>
+    </div>
+  </div>
+} @else if (user !== null) {
+<div class="profile-container">
+  <!-- Header Section -->
+  <div class="profile-header">
+    <div class="header-bg"></div>
+    <div class="profile-info">
+      <div class="avatar-container">
+        <img [src]="user.avatar" [alt]="user.name" class="avatar">
+        <div class="status-indicator"></div>
+      </div>
+      <div class="user-details">
+        <h1 class="username">{{ user.username }}</h1>
+        <h2 class="name">{{ user.name }}</h2>
+        <p class="title">{{ user.title }}</p>
+        <div class="meta-info">
+          <span class="location">📍 {{ user.location }}</span>
+          <span class="join-date">🚀 Joined {{ user.joinDate | date: 'dd MM yy'}}</span>
+        </div>
+        <div class="follow-stats">
+          <button class="stat-button" (click)="onShowFollowers()">
+            <span class="stat-number">{{ user.followers }}</span>
+            <span class="stat-label">Followers</span>
+          </button>
+          <button class="stat-button" (click)="onShowFollowing()">
+            <span class="stat-number">{{ user.following }}</span>
+            <span class="stat-label">Following</span>
+          </button>
+        </div>
+        
+        @if (!isOwnProfile) {
+          <div class="profile-actions">
+            <button 
+              class="follow-btn"
+              [class.following]="isFollowing"
+              [disabled]="loadingFollow"
+              (click)="onToggleFollow()">
+              @if (loadingFollow) {
+                <span class="btn-spinner"></span>
+              }
+              <span class="btn-text">
+                {{ isFollowing ? 'Following' : 'Follow' }}
+              </span>
+            </button>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Bio Section -->
+  <div class="bio-section">
+    <h3 class="section-title">SYSTEM_INFO</h3>
+    <p class="bio-text">{{ user.about }}</p>
+  </div>
+
+  <!-- Tech Stack -->
+  <div class="tech-section">
+    <h3 class="section-title">TECH_STACK</h3>
+    <div class="tech-grid">
+      <span class="tech-tag" *ngFor="let tech of user.techStack">{{ tech }}</span>
+    </div>
+  </div>
+
+  <!-- Activity Matrix
+  <div class="activity-section">
+    <h3 class="section-title">ACTIVITY_MATRIX</h3>
+    <div class="activity-grid">
+      <div class="activity-item">
+        <span class="activity-label">Pull Requests</span>
+        <div class="activity-bar">
+          <div class="activity-fill" [style.width.%]="(user.stats.pullRequests / 200) * 100"></div>
+        </div>
+        <span class="activity-value">{{ user.stats.pullRequests }}</span>
+      </div>
+      <div class="activity-item">
+        <span class="activity-label">Issues Resolved</span>
+        <div class="activity-bar">
+          <div class="activity-fill" [style.width.%]="(user.stats.issues / 100) * 100"></div>
+        </div>
+        <span class="activity-value">{{ user.stats.issues }}</span>
+      </div>
+      <div class="activity-item">
+        <span class="activity-label">Contributions</span>
+        <div class="activity-bar">
+          <div class="activity-fill" [style.width.%]="(user.stats.contributions / 600) * 100"></div>
+        </div>
+        <span class="activity-value">{{ user.stats.contributions }}</span>
+      </div>
+    </div>
+    </div> -->
+
+  @if (user.projects.length > 0) {
+    <div class="projects-section">
+      <h3 class="section-title">FEATURED_PROJECTS</h3>
+      <div class="projects-grid">
+        @for (project of user.projects; track $index) {
+          <div class="project-card">
+            <div class="project-header">
+              <h4 class="project-name">{{ project.name }}</h4>
+              <a href="{{ project.githubUrl }}" target="_blank" class="github-link">
+                <svg class="octocat-icon" viewBox="0 0 16 16" width="16" height="16" fill="currentColor">
+                  <path d="M8 0c4.42 0 8 3.58 8 8 0 3.54-2.29 6.53-5.47 7.59-.4-.07-.55-.17-.55-.38 0-.19.01-.82.01-1.49 2.01.37 2.53-.49 2.69-.94.09-.23.48-.94.82-1.13.28-.15.68-.52-.01-.53-.63-.01-1.08.58-1.23.82-.72 1.21-1.87.87-2.33.66-.07-.52-.28-.87-.51-1.07 1.78-.2 3.64-.89 3.64-3.95 0-.87-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.21-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68.81 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.31-.55.38C2.29 14.53 0 11.54 0 8c0-4.42 3.58-8 8-8Z"/>
+                </svg>
+                GitHub
+              </a>
+            </div>
+            <p class="project-description">{{ project.description }}</p>
+          </div>
+        }
+      </div>
+    </div>
+  }
+  
+  <!-- User Posts Section -->
+  @if (user.username) {
+    <app-user-posts [username]="user.username"></app-user-posts>
+  }
+</div>
+
+<!-- Followers Popup -->
+@if (showFollowersPopup && followersPopupData) {
+  <app-followers-popup 
+    [data]="followersPopupData" 
+    (close)="onCloseFollowersPopup()">
+  </app-followers-popup>
+}
+
+}

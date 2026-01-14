@@ -1,0 +1,28 @@
+<div class="comment-item">
+  <div class="comment-header">
+    <div class="user-info">
+      <div class="user-details">
+        <span class="username">{{ comment.username }}</span>
+      </div>
+    </div>
+  </div>
+  
+  <div class="comment-content">
+    <p>{{ comment.content }}</p>
+  </div>
+  
+  <div class="comment-actions">
+    <!-- <button 
+      class="action-btn small" 
+      [class.active]="comment.isLiked"
+      (click)="onLike()">
+      <span class="icon">♥</span>
+      <span class="count">{{ comment.likes }}</span>
+    </button> -->
+<!--     
+    <button class="action-btn small" (click)="onReply()">
+      <span class="icon">↩</span>
+      <span>Reply</span>
+    </button> -->
+  </div>
+</div>

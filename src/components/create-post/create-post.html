@@ -1,0 +1,85 @@
+<div class="create-post-container">
+  <div class="create-post-header">
+    <h1 class="page-title">// Create New Post</h1>
+    <div class="header-subtitle">Share your thoughts with the community</div>
+  </div>
+
+  <div class="form-container">
+    <form [formGroup]="postForm" (ngSubmit)="onSubmit()" class="post-form">
+      
+      <!-- Title Field -->
+      <div class="form-group">
+        <label for="title" class="form-label">Post Title</label>
+        <input
+          id="title"
+          type="text"
+          formControlName="title"
+          class="form-input"
+          [class.error]="getTitleError()"
+          placeholder="Enter your post title..."
+          maxlength="100"
+        />
+        @if (getTitleError()) {
+          <div class="error-message">{{ getTitleError() }}</div>
+        }
+        <div class="character-count">
+          {{ title?.value?.length || 0 }}/100 characters
+        </div>
+      </div>
+
+      <!-- Description Field -->
+      <div class="form-group">
+        <label for="description" class="form-label">Description</label>
+        <textarea
+          id="description"
+          formControlName="description"
+          class="form-textarea"
+          [class.error]="getDescriptionError()"
+          placeholder="Write your post content here..."
+          rows="8"
+          maxlength="2000"
+        ></textarea>
+        @if (getDescriptionError()) {
+          <div class="error-message">{{ getDescriptionError() }}</div>
+        }
+        <div class="character-count">
+          {{ description?.value?.length || 0 }}/2000 characters
+        </div>
+      </div>
+
+      <!-- Submit Error -->
+      @if (submitError) {
+        <div class="submit-error">
+          <span class="error-icon">⚠</span>
+          {{ submitError }}
+        </div>
+      }
+
+      <!-- Action Buttons -->
+      <div class="form-actions">
+        <button
+          type="button"
+          class="cancel-btn"
+          [disabled]="isSubmitting"
+          (click)="onCancel()"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          class="submit-btn"
+          [disabled]="postForm.invalid || isSubmitting"
+          [class.loading]="isSubmitting"
+        >
+          @if (isSubmitting) {
+            <span class="loading-spinner"></span>
+            <span>Publishing...</span>
+          } @else {
+            <span class="publish-icon">📝</span>
+            <span>Publish Post</span>
+          }
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

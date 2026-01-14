@@ -1,0 +1,33 @@
+@if (posts != null) {
+  <div class="posts-container">
+    <div class="posts-header">
+      <div class="header-content">
+        <h1 class="posts-title">// Recent Posts</h1>
+        <div class="posts-count">{{ posts.length }} posts</div>
+      </div>
+      <button class="create-post-btn" (click)="navigateToCreatePost()">
+        <span class="btn-icon">✏️</span>
+        <span class="btn-text">Create Post</span>
+      </button>
+    </div>
+
+    <div class="posts-feed">
+      @for (post of posts; track post.id) {
+        <app-post [postData]="post"></app-post>
+      }
+    </div>
+
+    @if (isLoading) {
+      <div class="loading-container">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">// Loading more posts...</div>
+      </div>
+    }
+
+    @if (!hasMorePosts && posts.length > 0) {
+      <div class="end-message">
+        <div class="end-text">// End of feed</div>
+      </div>
+    }
+  </div>
+}

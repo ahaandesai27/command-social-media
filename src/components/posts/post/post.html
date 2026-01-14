@@ -1,0 +1,112 @@
+@if (this.postData) {
+  <div class="post-container">
+    <div class="post-detail">
+      <div class="post-header">
+        <div class="user-info">
+          <!-- <div class="user-avatar">
+            {{ this.postData.username.charAt(0).toUpperCase() }}
+          </div> -->
+          
+
+          <div class="user-details">
+            <span class="username">{{ this.postData.username }}</span>
+            <span class="timestamp">
+              {{ this.postData.createdAt | date: 'd MMMM, y' }}
+            </span>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="post-content">
+        <h3 class="post-title">{{ postData.title }}</h3>
+
+        <p
+          class="post-description"
+          [class.collapsed]="!showFullDescription">
+          {{ postData.description }}
+        </p>
+
+        @if (postData.description.length > DESCRIPTION_LIMIT) {
+          <button
+            class="show-more-btn"
+            (click)="toggleDescription()">
+            {{ showFullDescription ? 'Show less' : 'Show more' }}
+          </button>
+        }
+      </div>
+
+      <div class="post-actions">
+        <button class="action-btn" (click)="onLikePost()">
+          <span class="icon">♥</span>
+          <span class="count">{{ this.postData.likes }}</span>
+        </button>
+        <button class="action-btn" (click)="toggleComments()">
+          <span class="icon">💬</span>
+          <span class="text">{{ showComments ? 'Hide' : 'Show' }} Comments</span>
+        </button>
+      </div>
+    </div>
+
+    @if (showComments) {
+      <div class="comments-section">
+        @if (loadingComments) {
+          <div class="comments-loader">
+            <div class="loader-spinner"></div>
+            <span class="loader-text">Loading comments...</span>
+          </div>
+        } @else {
+          <div class="add-comment">
+            <textarea
+              class="comment-input"
+              placeholder="Share your thoughts..."
+              [(ngModel)]="newComment"    
+              rows="2">
+            </textarea>
+            <button 
+              class="submit-comment-btn" 
+              (click)="submitComment()"
+              [disabled]="!newComment.trim()">
+              Post Comment
+            </button>
+          </div>
+          
+          <!-- Comments list -->
+          <div class="comments-list">
+            @for (comment of comments; track $index) {
+              <app-comment [comment]="comment"></app-comment>
+            }
+            @if (comments.length === 0) {
+              <div class="no-comments">
+                <p>No comments yet. Be the first to comment!</p>
+              </div>
+            }
+          </div>
+
+          <!-- Load More Comments Button -->
+          @if (hasMoreComments && comments.length > 0) {
+            <div class="load-more-comments">
+              <button 
+                class="load-more-btn" 
+                (click)="loadMoreComments()"
+                [disabled]="loadingComments">
+                @if (loadingComments) {
+                  <span class="loading-spinner"></span>
+                  <span>Loading...</span>
+                } @else {
+                  <span>// Load More Comments</span>
+                }
+              </button>
+            </div>
+          }
+
+          @if (!hasMoreComments && comments.length > 0) {
+            <div class="end-comments-message">
+              <span class="end-text">// End of comments</span>
+            </div>
+          }
+        }
+      </div>
+    }
+  </div>
+}

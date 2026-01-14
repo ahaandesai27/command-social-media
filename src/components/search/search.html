@@ -1,0 +1,118 @@
+<div class="search-container">
+  <!-- Search Header -->
+  <div class="search-header">
+    <h1 class="search-title">Search</h1>
+    <div class="search-input-container">
+      <input
+        type="text"
+        class="search-input"
+        placeholder="Search users and posts..."
+        [(ngModel)]="searchQuery"
+        (input)="onSearchInput($event.target.value)"
+        autofocus>
+      <span class="search-icon">🔍</span>
+    </div>
+  </div>
+
+  <!-- Search Tabs -->
+  <div class="search-tabs">
+    <button 
+      class="tab-btn"
+      [class.active]="activeTab === 'users'"
+      (click)="switchTab('users')">
+      Users
+    </button>
+    <button 
+      class="tab-btn"
+      [class.active]="activeTab === 'posts'"
+      (click)="switchTab('posts')">
+      Posts
+    </button>
+  </div>
+
+  <!-- Search Results -->
+  <div class="search-results">
+    <!-- Users Tab -->
+    @if (activeTab === 'users') {
+      <div class="users-results">
+        @if (loadingUsers) {
+          <div class="loading-state">
+            <div class="loader"></div>
+            <span>Searching users...</span>
+          </div>
+        } @else {
+          @if (userResults.length > 0) {
+            <div class="users-list">
+              @for (username of userResults; track username) {
+                <div class="user-item" (click)="navigateToProfile(username)">
+                  <div class="user-avatar">
+                    {{ username.charAt(0).toUpperCase() }}
+                  </div>
+                  <div class="user-info">
+                    <span class="username">{{ username }}</span>
+                    <span class="user-label">User Profile</span>
+                  </div>
+                  <div class="navigate-icon">→</div>
+                </div>
+              }
+            </div>
+          } @else if (searchQuery.trim()) {
+            <div class="empty-state">
+              <span class="empty-icon">👤</span>
+              <p>No users found for "{{ searchQuery }}"</p>
+            </div>
+          }
+        }
+      </div>
+    }
+
+    <!-- Posts Tab -->
+    @if (activeTab === 'posts') {
+      <div class="posts-results">
+        @if (loadingPosts && postResults.length === 0) {
+          <div class="loading-state">
+            <div class="loader"></div>
+            <span>Searching posts...</span>
+          </div>
+        } @else {
+          @if (postResults.length > 0) {
+            <div class="posts-list">
+              @for (post of postResults; track post.id) {
+                <app-post [postData]="post"></app-post>
+              }
+            </div>
+            
+            <!-- Load More Button -->
+            @if (hasMorePosts) {
+              <div class="load-more-container">
+                <button 
+                  class="load-more-btn"
+                  (click)="loadMorePosts()"
+                  [disabled]="loadingPosts">
+                  @if (loadingPosts) {
+                    <span class="btn-spinner"></span>
+                  }
+                  {{ loadingPosts ? 'Loading...' : 'Load More Posts' }}
+                </button>
+              </div>
+            }
+          } @else if (searchQuery.trim()) {
+            <div class="empty-state">
+              <span class="empty-icon">📝</span>
+              <p>No posts found for "{{ searchQuery }}"</p>
+            </div>
+          }
+        }
+      </div>
+    }
+
+    <!-- Initial State -->
+    @if (!searchQuery.trim() && !loadingUsers && !loadingPosts) {
+      <div class="initial-state">
+        <span class="search-illustration">🔍</span>
+        <h3>Start Searching</h3>
+        <p>Enter a keyword to search for users and posts</p>
+      </div>
+    }
+  </div>
+</div>

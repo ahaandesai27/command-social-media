@@ -1,0 +1,62 @@
+<div class="popup-backdrop" (click)="onBackdropClick($event)">
+    <div class="popup-container">
+        <!-- Header -->
+        <div class="popup-header">
+            <h2 class="popup-title">
+                {{ data?.type === 'followers' ? 'Followers' : 'Following' }}
+                @if (!loading && users.length > 0) {
+                <span class="user-count">({{ users.length }})</span>
+                }
+            </h2>
+            <button class="close-btn" (click)="onClose()">
+                <span class="close-icon">✕</span>
+            </button>
+        </div>
+
+        <!-- Content -->
+        <div class="popup-content">
+            @if (loading) {
+            <div class="loading-state">
+                <div class="spinner"></div>
+                <span class="loading-text">Loading users...</span>
+            </div>
+            } @else if (error) {
+            <div class="error-state">
+                <div class="error-icon">⚠️</div>
+                <span class="error-text">{{ error }}</span>
+                <button class="retry-btn" (click)="ngOnInit()">Retry</button>
+            </div>
+            } @else if (users.length === 0) {
+            <div class="empty-state">
+                <div class="empty-icon">👤</div>
+                <span class="empty-text">
+                    {{ data?.type === 'followers' ? 'No followers yet' : 'Not following anyone yet' }}
+                </span>
+            </div>
+            } @else {
+            <div class="users-list">
+                @for (user of users; track user.username) {
+                <div class="user-item">
+                    <div class="user-avatar">
+                        <img [src]="user.avatar || 'https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg'"
+                            [alt]="user.name" class="avatar-img">
+                    </div>
+                    <div class="user-info">
+                        <a [href]="'/profile/' + user.username" class="user-link">
+                            <h3 class="username">{{ user.username }}</h3>
+                            <p class="name">{{ user.name }}</p>
+                            @if (user.title) {
+                            <p class="title" style="color: cyan">{{ user.title }}</p>
+                            }
+                        </a>
+                    </div>
+                    <div class="user-stats">
+                        <span class="stat">{{ user.followers }} followers</span>
+                    </div>
+                </div>
+                }
+            </div>
+            }
+        </div>
+    </div>
+</div>

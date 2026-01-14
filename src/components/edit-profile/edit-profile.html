@@ -1,0 +1,243 @@
+@if (username != null) {
+<div class="edit-profile-container">
+  <div class="edit-profile-panel">
+    <div class="edit-profile-header">
+      <div class="edit-profile-icon">
+        <span class="terminal-symbol">⚙</span>
+      </div>
+      <h1 class="edit-profile-title">Profile Configuration</h1>
+      <p class="edit-profile-subtitle">Modify user parameters</p>
+    </div>
+
+    <form class="edit-profile-form" [formGroup]="profileForm.form" (ngSubmit)="submit()">
+      
+      <!-- Basic Information -->
+      <div class="form-section">
+        <h2 class="section-title">// Basic Information</h2>
+        
+        <div class="form-group">
+          <label class="form-label">Username</label>
+          <div class="input-wrapper">
+            <input
+              type="text"
+              class="form-input"
+              placeholder="neural_user_001"
+              formControlName="username"
+            >
+            <div class="input-glow"></div>
+          </div>
+          @if (profileForm.form.get('username')?.invalid && profileForm.form.get('username')?.touched) {
+            <div class="error-message">
+              Username is required (min 3 characters)
+            </div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Display Name</label>
+          <div class="input-wrapper">
+            <input
+              type="text"
+              class="form-input"
+              placeholder="Alex Chen"
+              formControlName="name"
+            >
+            <div class="input-glow"></div>
+          </div>
+          @if (profileForm.form.get('name')?.invalid && profileForm.form.get('name')?.touched) {
+            <div class="error-message">
+              Display name is required
+            </div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Title</label>
+          <div class="input-wrapper">
+            <input
+              type="text"
+              class="form-input"
+              placeholder="Full Stack Developer"
+              formControlName="title"
+            >
+            <div class="input-glow"></div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">About</label>
+          <div class="input-wrapper">
+            <textarea
+              class="form-input textarea"
+              placeholder="Tell us about yourself..."
+              rows="4"
+              formControlName="about"
+            ></textarea>
+            <div class="input-glow"></div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Location</label>
+          <div class="input-wrapper">
+            <input
+              type="text"
+              class="form-input"
+              placeholder="San Francisco, CA"
+              formControlName="location"
+            >
+            <div class="input-glow"></div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Avatar URL</label>
+          <div class="input-wrapper">
+            <input
+              type="url"
+              class="form-input"
+              placeholder="https://example.com/avatar.jpg"
+              formControlName="avatar"
+            >
+            <div class="input-glow"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tech Stack -->
+      <div class="form-section">
+        <div class="section-header">
+          <h2 class="section-title">// Tech Stack</h2>
+          <button type="button" class="add-button" (click)="profileForm.addTech()">
+            <span>+</span> Add Technology
+          </button>
+        </div>
+        
+        <div class="dynamic-list" formArrayName="techStack">
+          @for (tech of profileForm.techStack.controls; track $index) {
+            <div class="dynamic-item">
+              <div class="input-wrapper flex-grow">
+                <input
+                  type="text"
+                  class="form-input"
+                  placeholder="e.g., Angular, TypeScript"
+                  [formControlName]="$index"
+                >
+                <div class="input-glow"></div>
+              </div>
+              <button type="button" class="remove-button" (click)="profileForm.removeTech($index)">
+                ×
+              </button>
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Projects -->
+      <div class="form-section">
+        <div class="section-header">
+          <h2 class="section-title">// Projects</h2>
+          @if (shouldShowAddButton) {
+            <button 
+              type="button" 
+              class="add-button" 
+              [disabled]="!canAddProject"
+              (click)="profileForm.addProject()">
+              <span>+</span> Add Project
+            </button>
+          }
+        </div>
+        
+        <div class="projects-list" formArrayName="projects">
+          @for (project of profileForm.projects.controls; track $index) {
+            <div class="project-item" [formGroupName]="$index">
+              <div class="project-header">
+                <h3 class="project-title">Project {{$index + 1}}</h3>
+                <div class="project-actions">
+                  <button type="button" class="save-project-button" (click)="saveProject($index)">
+                    💾 Save
+                  </button>
+                  <button type="button" class="remove-button" (click)="profileForm.removeProject($index)">
+                    ×
+                  </button>
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label class="form-label">Project Name</label>
+                <div class="input-wrapper">
+                  <input
+                    type="text"
+                    class="form-input"
+                    placeholder="Social Media App"
+                    formControlName="name"
+                  >
+                  <div class="input-glow"></div>
+                </div>
+                @if (project.get('name')?.invalid && project.get('name')?.touched) {
+                  <div class="error-message">
+                    Project name is required
+                  </div>
+                }
+              </div>
+              
+              <div class="form-group">
+                <label class="form-label">Description</label>
+                <div class="input-wrapper">
+                  <textarea
+                    class="form-input textarea"
+                    placeholder="Describe your project..."
+                    rows="3"
+                    formControlName="description"
+                  ></textarea>
+                  <div class="input-glow"></div>
+                </div>
+                @if (project.get('description')?.invalid && project.get('description')?.touched) {
+                  <div class="error-message">
+                    Project description is required
+                  </div>
+                }
+              </div>
+              
+              <div class="form-group">
+                <label class="form-label">GitHub URL</label>
+                <div class="input-wrapper">
+                  <input
+                    type="url"
+                    class="form-input"
+                    placeholder="https://github.com/username/project"
+                    formControlName="githubUrl"
+                  >
+                  <div class="input-glow"></div>
+                </div>
+                @if (project.get('githubUrl')?.invalid && project.get('githubUrl')?.touched) {
+                  <div class="error-message">
+                    Valid GitHub URL is required
+                  </div>
+                }
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Form Actions -->
+      <div class="form-actions">
+        <button type="submit" class="auth-button primary" [disabled]="isLoading">
+          @if (!isLoading) {
+            <span>Save Profile</span>
+          } @else {
+            <span class="loading-content">
+              <div class="spinner"></div>
+              Saving...
+            </span>
+          }
+        </button>
+        <button type="button" class="auth-button secondary">
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+}

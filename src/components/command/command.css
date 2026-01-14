@@ -1,0 +1,181 @@
+/* =========================
+   COMMAND OVERLAY
+   ========================= */
+
+.command-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 10, 10, 0.85);
+  backdrop-filter: blur(2px);
+  display: none;
+  align-items: center;      /* vertical centering */
+  justify-content: center;  /* horizontal centering */
+  z-index: 9999;
+}
+
+.command-overlay.open {
+  display: flex;
+}
+
+
+/* =========================
+   COMMAND PANEL
+   ========================= */
+
+.command-panel {
+  width: 640px;
+  max-width: calc(100% - 40px);
+  background: var(--secondary-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  box-shadow:
+    0 0 0 1px rgba(0, 212, 255, 0.15),
+    0 30px 80px rgba(0, 0, 0, 0.8);
+  overflow: hidden;
+  animation: cmdFadeIn 120ms ease-out;
+}
+
+@keyframes cmdFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========================
+   INPUT ROW
+   ========================= */
+
+.command-input-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--border-color);
+  background: var(--accent-bg);
+}
+
+.command-prompt {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 1rem;
+  color: var(--success);
+  flex-shrink: 0;
+}
+
+.command-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text-primary);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 1rem;
+}
+
+.command-input::placeholder {
+  color: var(--text-muted);
+}
+
+/* =========================
+   COMMAND OUTPUT
+   ========================= */
+
+.command-output {
+  padding: 16px 18px;
+  background: var(--primary-bg);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.command-logs {
+  width: 100%;
+  background: transparent;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 12px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  resize: none;
+  outline: none;
+  max-height: 100px;
+  overflow-y: auto;
+  line-height: 1.4;
+  box-sizing: border-box;
+}
+
+.command-logs::placeholder {
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.command-logs:focus {
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 2px rgba(0, 212, 255, 0.15);
+}
+
+/* Custom scrollbar for command logs */
+.command-logs::-webkit-scrollbar {
+  width: 6px;
+}
+
+.command-logs::-webkit-scrollbar-thumb {
+  background: rgba(0, 212, 255, 0.25);
+  border-radius: 3px;
+}
+
+.command-logs::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* =========================
+   RESULTS LIST
+   ========================= */
+
+.command-results {
+  list-style: none;
+  margin: 0;
+  padding: 6px 0;
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+.command-result {
+  padding: 10px 18px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.command-result:hover,
+.command-result.active {
+  background: rgba(0, 212, 255, 0.08);
+  color: var(--primary-blue);
+}
+
+/* Optional subtle divider effect */
+.command-result + .command-result {
+  border-top: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+/* =========================
+   SCROLLBAR (OPTIONAL)
+   ========================= */
+
+.command-results::-webkit-scrollbar {
+  width: 6px;
+}
+
+.command-results::-webkit-scrollbar-thumb {
+  background: rgba(0, 212, 255, 0.25);
+  border-radius: 3px;
+}
+
+.command-results::-webkit-scrollbar-track {
+  background: transparent;
+}
