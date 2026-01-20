@@ -8,8 +8,12 @@ import { EditProfile } from '../components/edit-profile/edit-profile';
 import { Posts } from '../components/posts/posts';
 import { Search } from '../components/search/search';
 import { CreatePost } from '../components/create-post/create-post';
+import { Docs } from '../components/docs/docs';
 
 export const routes: Routes = [
+    // documentation
+    {path: 'docs', component: Docs},
+
     // post 
     {path: 'posts/create', component: CreatePost},
     {path: 'posts', component: Posts},

@@ -106,6 +106,10 @@ export class Command {
                 this.setLogs("Login successful!");
               }
 
+              else if (result.name === 'register') {
+                this.setLogs("Registration successful! Login to view your profile.");
+              }
+
               else if (result.name === 'editProfile') {
                 this.setLogs("Profile updated!");
               }

@@ -5,9 +5,9 @@ import { JwtService } from '../auth/jwt.service';
 import { UserService } from '../user/user.service';
 import { User } from '../../models/User';
 import { SearchService } from '../search.service';
-import { Post } from '../../models/Post';
 import { Observable } from 'rxjs';
 import { FollowService } from '../user/follow.service';
+import { RegisterSerivce } from '../auth/register.service';
 
 type CommandResult =
     | { type: 'navigation'; path: string }
@@ -21,6 +21,7 @@ type CommandResult =
 })
 export class CommandProcessService {
     constructor(private authService: AuthService,
+        private registerService: RegisterSerivce,
         private postService: PostService,
         private jwtService: JwtService,
         private userService: UserService,
@@ -35,6 +36,9 @@ export class CommandProcessService {
         register: '/register',
         posts: '/posts',
         'create post': '/posts/create',
+        docs: '/docs',
+        documentation: '/docs',
+        help: '/docs',
     };
 
     processCommand(command: string): CommandResult {
@@ -44,11 +48,9 @@ export class CommandProcessService {
             return this.handleNavigation(cmd.slice(3).trim());
         }
 
-        if (cmd.startsWith('do ')) {
-            return this.handleAction(cmd.slice(3).trim());
+        else {
+            return this.handleAction(cmd.trim());
         }
-
-        return { type: 'error', message: "Invalid command! Start navigations with 'go' and actions with 'do'. ", code: 400 };
     }
 
     private handleNavigation(arg: string): CommandResult {
@@ -66,6 +68,7 @@ export class CommandProcessService {
     }
 
     private handleAction(arg: string): CommandResult {
+        console.log(arg)
         if (arg === 'logout') {
             this.authService.logout();
             return { type: 'action', name: 'logout' };
@@ -80,15 +83,28 @@ export class CommandProcessService {
 
         if (arg.startsWith("login")) return this.loginViaCommand(arg);
 
-        if (arg.startsWith("search")) return this.searchViaCommand(arg);
+        else if (arg.startsWith("register")) return this.registerViaCommand(arg);
 
-        if (arg.startsWith("create post")) return this.createPostViaCommand(arg);
+        else if (arg.startsWith("search")) return this.searchViaCommand(arg);
 
-        if (arg.startsWith("edit")) return this.editProfileViaCommand(arg);
+        else if (arg.startsWith("create post")) return this.createPostViaCommand(arg);
 
-        if (arg.startsWith("follow")) return this.followUser(arg);
+        else if (arg.startsWith("edit")) return this.editProfileViaCommand(arg);
 
-        if (arg.startsWith("unfollow")) return this.unfollowUser(arg);
+        else if (arg.startsWith("follow")) return this.followUser(arg);
+
+        else if (arg.startsWith("unfollow")) return this.unfollowUser(arg);
+
+        else if (arg === "help" || arg === "commands") {
+            return {
+                type: 'log',
+                content: `Available commands:
+Navigation: go home, go profile, go login, go register, go posts, go docs
+Actions: logout, current user, login, search users/posts, create post, follow, unfollow
+Profile: edit name, edit title, edit about, edit location, edit techStack
+Help: help, commands, go docs (for full documentation)`
+            };
+        }
 
         return { type: 'error', message: "Action does not exist!", code: 404 };
     }
@@ -116,6 +132,27 @@ export class CommandProcessService {
         };
     }
 
+    private registerViaCommand(input: string): CommandResult {
+        const usernameMatch = input.match(/--username\s+([^\s]+)/);
+        if (!usernameMatch) {
+            return { type: 'error', message: 'Missing --username', code: 400 };
+        }
+
+        const passwordMatch = input.match(/--password\s+([^\s]+)/);
+        if (!passwordMatch) {
+            return { type: 'error', message: 'Missing --password', code: 400 };
+        }
+
+        const username = usernameMatch[1];
+        const password = passwordMatch[1];
+
+        return {
+            type: 'action',
+            name: 'register',
+            action$: this.registerService.register({ username, password })
+        };
+        
+    }
     private createPostViaCommand(input: string): CommandResult {
         // Handles the create post method, by showing if the user has missed some fields 
         // ! Add a helper showing the commmand syntax if the user fails 
@@ -221,7 +258,7 @@ export class CommandProcessService {
             };
         }
         else {
-            return { type: 'error', message: 'Invalid search parameter? Use users or posts.', code: 400 };
+            return { type: 'error', message: 'Invalid search parameter. Use users or posts.', code: 400 };
         }
     }
 

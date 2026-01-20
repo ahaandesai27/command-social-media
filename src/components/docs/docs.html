@@ -1,0 +1,94 @@
+<div class="docs-container">
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1 class="docs-title">COMMAND DOCUMENTATION</h1>
+            <p class="docs-tagline">Master the Command Interface</p>
+            <p class="docs-description">
+                Complete reference guide for all available commands in Command Social.
+                Use these commands in the terminal interface to navigate, interact, and control
+                your social media experience with precision and efficiency.
+            </p>
+        </div>
+    </section>
+
+    <!-- Command Sections -->
+    <div class="content-container">
+
+                <!-- Action Commands -->
+        <section class="command-section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="command-type">ACTIONS</span>
+                    <span class="command-description">Perform operations</span>
+                </h2>
+            </div>
+
+            <div class="commands-grid">
+                @for (cmd of actionCommands; track cmd.command) {
+                    <div class="command-card">
+                        <div class="command-header">
+                            <span class="command-syntax">{{ cmd.command }}</span>
+                        </div>
+                        <p class="command-desc">{{ cmd.description }}</p>
+                        <div class="command-example">
+                            <span class="example-label">Example:</span>
+                            <code class="example-code">{{ cmd.example }}</code>
+                        </div>
+                    </div>
+                }
+            </div>
+        </section>
+
+        <!-- Navigation Commands -->
+        <section class="command-section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="command-type">NAVIGATION</span>
+                    <span class="command-description">Move between pages. These commands start with "go".</span>
+                </h2>
+            </div>
+
+            <div class="commands-grid">
+                @for (cmd of navigationCommands; track cmd.command) {
+                    <div class="command-card">
+                        <div class="command-header">
+                            <span class="command-syntax">{{ cmd.command }}</span>
+                        </div>
+                        <p class="command-desc">{{ cmd.description }}</p>
+                        <div class="command-example">
+                            <span class="example-label">Example:</span>
+                            <code class="example-code">{{ cmd.example }}</code>
+                        </div>
+                    </div>
+                }
+            </div>
+        </section>
+
+        <!-- Edit Commands -->
+        <section class="command-section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="command-type">PROFILE EDITING</span>
+                    <span class="command-description">Update your profile</span>
+                </h2>
+            </div>
+
+            <div class="commands-grid">
+                @for (cmd of editCommands; track cmd.command) {
+                    <div class="command-card">
+                        <div class="command-header">
+                            <span class="command-syntax">{{ cmd.command }}</span>
+                        </div>
+                        <p class="command-desc">{{ cmd.description }}</p>
+                        <div class="command-example">
+                            <span class="example-label">Example:</span>
+                            <code class="example-code">{{ cmd.example }}</code>
+                        </div>
+                    </div>
+                }
+            </div>
+        </section>
+
+    </div>
+</div>
