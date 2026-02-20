@@ -55,7 +55,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())                       // disable CSRFs for stateless
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**", "/api/health").permitAll()
-                        .anyRequest().permitAll()           // IMP: Change to .authenticated() before deployment
+                        .anyRequest().authenticated()    // IMP: Change to .authenticated() before deployment
                 )                                                                              // api/auth/* like login , register are permitted by all, rest must be authenticated
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

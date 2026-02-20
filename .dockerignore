@@ -1,0 +1,25 @@
+# Git
+.git
+.gitignore
+
+# Build output
+target
+out
+
+# Gradle
+.gradle
+
+# Maven
+.mvn
+
+# IDE files
+.idea
+.vscode
+*.iml
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
