@@ -1,12 +1,13 @@
 import { Injectable, signal } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable, tap } from "rxjs";
+import { environment } from "../../env/env";
 
 @Injectable({
     providedIn: 'root'
 })
 export class RegisterSerivce {
-    private readonly API = 'http://localhost:9090/api/auth'
+    private readonly API = `${environment.apiBaseUrl}/auth`
 
     constructor(private http: HttpClient) {}
 
