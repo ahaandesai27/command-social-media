@@ -20,7 +20,6 @@ export class JwtService {
     
         try {
       const payload = jwtDecode<JwtPayload>(token)
-      console.log("decoded payload", payload)
       return payload
     } catch {
       return null

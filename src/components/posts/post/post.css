@@ -5,11 +5,37 @@
 ========================= */
 
 .post-container {
-  max-width: 800px;
+  width: 800px;        /* Fixed width for desktop */
+  max-width: 100%;     /* Prevent overflow */
   margin: 0;
   padding: 0;
   background: transparent;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* Consistent breakpoints with fixed widths - matching posts.css exactly */
+@media (max-width: 1024px) {
+  .post-container {
+    width: 700px;
+  }
+}
+
+@media (max-width: 900px) {
+  .post-container {
+    width: 600px;
+  }
+}
+
+@media (max-width: 700px) {
+  .post-container {
+    width: 500px;
+  }
+}
+
+@media (max-width: 550px) {
+  .post-container {
+    width: 95vw;  /* Use viewport width for very small screens */
+  }
 }
 
 /* =========================

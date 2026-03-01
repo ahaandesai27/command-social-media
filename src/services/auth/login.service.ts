@@ -10,7 +10,24 @@ export class AuthService {
     private readonly API = `${environment.apiBaseUrl}/auth`
     isAuthenticated = signal(false);
 
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient) {
+        this.checkAuthStatus();
+    }
+
+    private checkAuthStatus() {
+        const token = this.getToken();
+        if (token) {
+            try {
+                const payload = JSON.parse(atob(token.split('.')[1]));
+                const isExpired = Date.now() >= (payload.exp * 1000);
+                this.isAuthenticated.set(!isExpired);
+            } catch {
+                this.isAuthenticated.set(false);
+            }
+        } else {
+            this.isAuthenticated.set(false);
+        }
+    }
 
     login(credentials: { username: string; password: string}): Observable<{token: string}> {
       return this.http.post<{token: string}>(
@@ -30,6 +47,10 @@ export class AuthService {
     logout() {
       localStorage.removeItem('token');
       this.isAuthenticated.set(false);
+    }
+
+    refreshAuthStatus() {
+        this.checkAuthStatus();
     }
 
     getToken() {

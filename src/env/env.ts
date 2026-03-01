@@ -1,4 +1,4 @@
 export const environment = {
-  production: true,
-  apiBaseUrl: 'https://command-social-backend.onrender.com/api'
+  production: false,
+  apiBaseUrl: 'http://localhost:9090/api'
 };

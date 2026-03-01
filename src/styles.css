@@ -20,6 +20,6 @@
 body {
     margin: 0;
     padding: 0;
-    padding-top: 60px; /* Account for fixed brand header */
+    padding-top: 50px; /* Account for fixed brand header */
     background-color: #0a0a0a;
 }

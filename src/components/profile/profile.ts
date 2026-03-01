@@ -3,15 +3,17 @@ import { CommonModule } from '@angular/common';
 import { User } from '../../models/User';
 import { UserService } from '../../services/user/user.service';
 import { JwtService } from '../../services/auth/jwt.service';
-import { ActivatedRoute } from '@angular/router';
+import { AuthService } from '../../services/auth/login.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FollowService, FollowDto } from '../../services/user/follow.service';
 import { UserPosts } from './user-posts/user-posts';
 import { FollowersPopup, FollowersPopupData } from './followers-popup/followers-popup';
+import { NotLoggedIn } from '../not-logged-in/not-logged-in';
 
 
 @Component({
   selector: 'app-profile',
-  imports: [CommonModule, UserPosts, FollowersPopup],
+  imports: [CommonModule, UserPosts, FollowersPopup, NotLoggedIn],
   templateUrl: './profile.html',
   styleUrl: './profile.css',
   standalone: true
@@ -24,17 +26,25 @@ export class Profile {
   public profileNotFound: boolean = false;
   public showFollowersPopup: boolean = false;
   public followersPopupData: FollowersPopupData | null = null;
+  public isAuthenticated: boolean = false;
   private currentUsername: string | null = null;
 
   constructor(private userService: UserService,
     private jwtService: JwtService,
+    private authService: AuthService,
+    private router: Router,
     private route: ActivatedRoute,
     private followService: FollowService
   ) {
     this.currentUsername = this.jwtService.getUsername();
+    this.isAuthenticated = !!this.currentUsername && !this.jwtService.isExpired();
   }
 
   ngOnInit() {
+    if (!this.isAuthenticated) {
+      return; // Show not logged in page
+    }
+
     this.route.paramMap.subscribe(params => {
       // paramMap is an Observable returned by angular router 
       // params is the argument (paramMap) passed to the callback function
@@ -135,6 +145,11 @@ export class Profile {
   onCloseFollowersPopup() {
     this.showFollowersPopup = false;
     this.followersPopupData = null;
+  }
+
+  onLogout() {
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 
 }

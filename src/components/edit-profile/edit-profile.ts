@@ -4,17 +4,19 @@ import { UserService } from '../../services/user/user.service';
 import { UserProjectService } from '../../services/user/user-project.service';
 import { JwtService } from '../../services/auth/jwt.service';
 import { ProfileFormService } from '../../services/user/profile-form.service';
+import { NotLoggedIn } from '../not-logged-in/not-logged-in';
 
 @Component({
   selector: 'app-edit-profile',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, NotLoggedIn],
   templateUrl: './edit-profile.html',
   styleUrl: './edit-profile.css'
 })
 export class EditProfile implements OnInit {
   isLoading = false;
   public username: string | null = null;
+  public isAuthenticated: boolean = false;
   private userId: number | null = null;
 
   constructor(
@@ -27,10 +29,11 @@ export class EditProfile implements OnInit {
   ngOnInit() {
     this.username = this.jwtService.getUsername();
     this.userId = this.jwtService.getId();
+    this.isAuthenticated = !!this.username && !this.jwtService.isExpired();
 
     console.log("Current username: ", this.username);
 
-    if (!this.username || !this.userId) return;
+    if (!this.username || !this.userId || !this.isAuthenticated) return;
 
     this.userService.getUserByUsername(this.username).subscribe(user =>
       this.profileForm.setUser(user)

@@ -5,10 +5,11 @@ import { Router } from '@angular/router';
 import { PostService } from '../../services/post.service';
 import { JwtService } from '../../services/auth/jwt.service';
 import { Subscription } from 'rxjs';
+import { NotLoggedIn } from '../not-logged-in/not-logged-in';
 
 @Component({
   selector: 'app-create-post',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, NotLoggedIn],
   templateUrl: './create-post.html',
   styleUrl: './create-post.css',
   standalone: true,
@@ -18,6 +19,7 @@ export class CreatePost {
   isSubmitting = false;
   submitError: string | null = null;
   currentUsername: string | null = null;
+  isAuthenticated: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -26,6 +28,7 @@ export class CreatePost {
     private router: Router
   ) {
     this.currentUsername = this.jwtService.getUsername();
+    this.isAuthenticated = !!this.currentUsername && !this.jwtService.isExpired();
     
     this.postForm = this.formBuilder.group({
       title: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
@@ -34,7 +37,7 @@ export class CreatePost {
   }
 
   onSubmit() {
-    if (this.postForm.invalid || this.isSubmitting || !this.currentUsername) {
+    if (this.postForm.invalid || this.isSubmitting || !this.isAuthenticated || !this.currentUsername) {
       this.markFormGroupTouched(); // marks all fields as touched, so validation errors are shown 
       // invalid, isSubmitting, etc are just safeguards so code isnt executed 
       return;

@@ -1,4 +1,6 @@
-@if (profileNotFound) {
+@if (!isAuthenticated) {
+  <app-not-logged-in></app-not-logged-in>
+} @else if (profileNotFound) {
   <div class="profile-not-found">
     <div class="error-container">
       <div class="error-icon">🔍</div>
@@ -53,6 +55,13 @@
               <span class="btn-text">
                 {{ isFollowing ? 'Following' : 'Follow' }}
               </span>
+            </button>
+          </div>
+        } @else {
+          <div class="profile-actions">
+            <button class="logout-btn" (click)="onLogout()">
+              <span class="btn-icon">🚪</span>
+              <span class="btn-text">LOGOUT</span>
             </button>
           </div>
         }

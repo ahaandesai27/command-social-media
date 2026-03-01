@@ -1,0 +1,53 @@
+<div class="auth-container">
+  <div class="auth-panel">
+    <div class="auth-header">
+      <div class="auth-icon">
+        <span class="terminal-symbol">🔐</span>
+      </div>
+      <h1 class="auth-title">// ACCESS DENIED</h1>
+      <p class="auth-subtitle">Authentication required to proceed</p>
+    </div>
+    
+    <div class="auth-content">
+      <div class="status-display">
+        <div class="status-line">
+          <span class="prompt">$</span>
+          <span class="command">whoami</span>
+        </div>
+        <div class="status-output">
+          ERROR: User not authenticated
+        </div>
+        <div class="status-line">
+          <span class="prompt">$</span>
+          <span class="command">access --permission=required</span>
+        </div>
+        <div class="status-output error">
+          Permission denied. Please authenticate to continue.
+        </div>
+      </div>
+      
+      <div class="auth-message">
+        <p>You need to be logged in to access this page.</p>
+        <p>Please authenticate to continue your session.</p>
+      </div>
+      
+      <div class="auth-actions">
+        <button class="auth-button primary" (click)="navigateToLogin()">
+          <span class="button-icon">→</span>
+          <span>LOGIN</span>
+        </button>
+        
+        <button class="auth-button secondary" (click)="navigateToRegister()">
+          <span class="button-icon">+</span>
+          <span>REGISTER</span>
+        </button>
+      </div>
+    </div>
+    
+    <div class="auth-footer">
+      <p class="auth-link-text">
+        System security protocol active
+      </p>
+    </div>
+  </div>
+</div>

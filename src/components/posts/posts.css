@@ -1,8 +1,7 @@
 
 
 .posts-container {
-  width: 66.67%;
-  max-width: none;
+  max-width: 100%;
   margin: 0;
   margin-right: auto;
   padding: 20px;
@@ -76,6 +75,8 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
+  max-width: 100%;
+  align-items: center;
 }
 
 .post-card {
@@ -83,11 +84,37 @@
   border: 1px solid var(--border-color);
   border-radius: 12px;
   padding: 24px;
+  width: 800px;        /* Fixed width for desktop */
+  max-width: 100%;     /* Prevent overflow */
   cursor: pointer;
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
-  margin: 0;
+}
+
+/* Consistent breakpoints with fixed widths */
+@media (max-width: 1024px) {
+  .post-card {
+    width: 700px;
+  }
+}
+
+@media (max-width: 900px) {
+  .post-card {
+    width: 600px;
+  }
+}
+
+@media (max-width: 700px) {
+  .post-card {
+    width: 500px;
+  }
+}
+
+@media (max-width: 550px) {
+  .post-card {
+    width: 95vw;  /* Use viewport width for very small screens */
+  }
 }
 
 .post-card::before {
@@ -263,6 +290,7 @@
   
   .post-card {
     padding: 16px;
+    margin: 0 auto;            /* Center the card */
   }
   
   .posts-header {
