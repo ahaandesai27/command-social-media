@@ -18,6 +18,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.web.server.ResponseStatusException;
 
 
+
 import java.util.List;
 
 @Service
@@ -77,7 +78,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponseDto getUser(Integer userId) {
+    public UserResponseDto getUser(Long userId) {
         User user = this.userRepo.findById(userId).orElseThrow();
         return this.userToDto(user);
     }
@@ -88,7 +89,7 @@ public class UserServiceImpl implements UserService {
         return this.userToDto(user);
     }
 
-    public UserResponseDto updateUser(UserUpdateDto userDto, Integer userId) {
+    public UserResponseDto updateUser(UserUpdateDto userDto, Long userId) {
         User user = this.userRepo.findById(userId)
                 .orElseThrow();
 
@@ -104,7 +105,7 @@ public class UserServiceImpl implements UserService {
         return this.userToDto(updatedUser);
     }
 
-    public UserResponseDto partialUpdateUser(UserUpdateDto userDto, Integer userId) {
+    public UserResponseDto partialUpdateUser(UserUpdateDto userDto, Long userId) {
         User user = this.userRepo.findById(userId)
                 .orElseThrow();
 
@@ -132,7 +133,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUser(Integer userId) {
+    public void deleteUser(Long userId) {
         this.userRepo.deleteById(userId);
         // no-op if user does not exist
     }
@@ -140,7 +141,7 @@ public class UserServiceImpl implements UserService {
 
     // Like and Dislike Post methods
     @Override
-    public void likePost(Integer userId, Long postId) {
+    public void likePost(Long userId, Long postId) {
         User user = this.userRepo.findById(userId).orElseThrow();
         Post post = this.postRepo.findById(postId).orElseThrow();
 
@@ -150,7 +151,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void dislikePost(Integer userId, Long postId) {
+    public void dislikePost(Long userId, Long postId) {
         User user = this.userRepo.findById(userId).orElseThrow();
         Post post = this.postRepo.findById(postId).orElseThrow();
 

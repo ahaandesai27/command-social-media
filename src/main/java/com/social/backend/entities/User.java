@@ -25,7 +25,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
 
     @FullTextField(analyzer = "username_autocomplete", searchAnalyzer = "standard", projectable = Projectable.YES) // stores the fields value in search index
     @KeywordField(name = "username_sort", sortable = Sortable.YES)

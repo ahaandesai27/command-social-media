@@ -17,7 +17,7 @@ public class ProjectController {
 
     @PostMapping("/users/{userId}/projects")
     public ResponseEntity<ProjectDto> addProject(
-            @PathVariable Integer userId,
+            @PathVariable Long userId,
             @Valid @RequestBody ProjectDto projectDto
     ) {
         ProjectDto createdProject = projectService.addProject(userId, projectDto);
@@ -26,7 +26,7 @@ public class ProjectController {
 
     @PutMapping("/projects/{projectId}")
     public ResponseEntity<ProjectDto> updateProject(
-            @PathVariable Integer projectId,
+            @PathVariable Long projectId,
             @Valid @RequestBody ProjectDto projectDto
     ) {
         ProjectDto updatedProject = projectService.updateProject(projectId, projectDto);
@@ -34,7 +34,7 @@ public class ProjectController {
     }
 
     @DeleteMapping("/projects/{projectId}")
-    public ResponseEntity<Void> deleteProject(@PathVariable Integer projectId) {
+    public ResponseEntity<Void> deleteProject(@PathVariable Long projectId) {
         projectService.deleteProject(projectId);
         return ResponseEntity.noContent().build();
     }

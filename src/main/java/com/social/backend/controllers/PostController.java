@@ -81,7 +81,7 @@ public class PostController {
 
     @PostMapping("/{userId}/like/{postId}")
     public ResponseEntity<String> likePost(
-            @PathVariable Integer userId,
+            @PathVariable Long userId,
             @PathVariable Long postId) {
         userService.likePost(userId, postId);
         return ResponseEntity.ok("Post liked");
@@ -89,7 +89,7 @@ public class PostController {
 
     @PostMapping("/{userId}/dislike/{postId}")
     public ResponseEntity<String> dislikePost(
-            @PathVariable Integer userId,
+            @PathVariable Long userId,
             @PathVariable Long postId) {
         userService.dislikePost(userId, postId);
         return ResponseEntity.ok("Post disliked");

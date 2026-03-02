@@ -33,7 +33,7 @@ public class ProjectServiceImpl implements ProjectService {
 
 
     @Override
-    public ProjectDto addProject(Integer userId, ProjectDto projectDto) {
+    public ProjectDto addProject(Long userId, ProjectDto projectDto) {
         if (userId == null) {
             throw new IllegalArgumentException("User ID must not be null");
         }
@@ -49,7 +49,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public ProjectDto updateProject(Integer projectId, ProjectDto projectDto) {
+    public ProjectDto updateProject(Long projectId, ProjectDto projectDto) {
         if (projectId == null) {
             throw new IllegalArgumentException("Project ID must not be null");
         }
@@ -66,7 +66,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public void deleteProject(Integer projectId) {
+    public void deleteProject(Long projectId) {
         if (projectId == null) {
             throw new IllegalArgumentException("Project ID must not be null");
         }

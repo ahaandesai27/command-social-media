@@ -11,11 +11,11 @@ import java.util.List;
 @Getter
 @Setter
 public class CustomUserDetails implements UserDetails {
-    private final int id;
+    private final Long id;
     private final String username;
     private final String password;
 
-    public CustomUserDetails(int id, String username, String password) {
+    public CustomUserDetails(Long id, String username, String password) {
         this.id = id;
         this.username = username;
         this.password = password;

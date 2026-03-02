@@ -14,7 +14,7 @@ public class Project {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;                                 // I think use this ID to update
+    private Long id;                                 // I think use this ID to update
 
     @ManyToOne(fetch = FetchType.LAZY)              // many projects owned by same user
     @JoinColumn(name = "user_id", nullable = false)

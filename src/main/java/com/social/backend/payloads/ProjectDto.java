@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 public class ProjectDto {
 
-    private int id;     // let it be a field to return as well
+    private Long id;     // let it be a field to return as well
 
     @NotBlank
     @Size(max = 100)

@@ -36,25 +36,25 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserResponseDto> getUserById(@PathVariable Integer id) {
+    public ResponseEntity<UserResponseDto> getUserById(@PathVariable Long id) {
         UserResponseDto user = this.userService.getUser(id);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserResponseDto> updateUserById(@PathVariable Integer id, @RequestBody UserUpdateDto userDto) {
+    public ResponseEntity<UserResponseDto> updateUserById(@PathVariable Long id, @RequestBody UserUpdateDto userDto) {
         UserResponseDto updatedUser = this.userService.updateUser(userDto, id);
         return ResponseEntity.ok(updatedUser);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<UserResponseDto> partialUpdateUserById(@PathVariable Integer id, @RequestBody UserUpdateDto userDto) {
+    public ResponseEntity<UserResponseDto> partialUpdateUserById(@PathVariable Long id, @RequestBody UserUpdateDto userDto) {
         UserResponseDto updatedUser = this.userService.partialUpdateUser(userDto, id);
         return ResponseEntity.ok(updatedUser);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteUserById(@PathVariable Integer id) {
+    public ResponseEntity<String> deleteUserById(@PathVariable Long id) {
         this.userService.deleteUser(id);
         return ResponseEntity.ok("User Deleted Successfully");
     }

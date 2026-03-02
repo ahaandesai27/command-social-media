@@ -10,11 +10,11 @@ public interface UserService {
 
     UserResponseDto createUser(UserCreateDto user);
     List<UserResponseDto> getUsers();
-    UserResponseDto getUser(Integer userId);
-    UserResponseDto updateUser(UserUpdateDto user, Integer userId);
-    UserResponseDto partialUpdateUser(UserUpdateDto user, Integer userId);
+    UserResponseDto getUser(Long userId);
+    UserResponseDto updateUser(UserUpdateDto user, Long userId);
+    UserResponseDto partialUpdateUser(UserUpdateDto user, Long userId);
     UserResponseDto getUserByUsername(String username);
-    void deleteUser(Integer userId);
-    void likePost(Integer userId, Long postId);
-    void dislikePost(Integer userId, Long postId);
+    void deleteUser(Long userId);
+    void likePost(Long userId, Long postId);
+    void dislikePost(Long userId, Long postId);
 }
