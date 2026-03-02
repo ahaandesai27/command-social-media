@@ -3,6 +3,7 @@ package com.social.backend.services.impl;
 import com.social.backend.entities.Comment;
 import com.social.backend.entities.Post;
 import com.social.backend.entities.User;
+import com.social.backend.exceptions.ResourceNotFoundException;
 import com.social.backend.payloads.comment.CommentCreateDto;
 import com.social.backend.payloads.comment.CommentResponseDto;
 import com.social.backend.repositories.CommentRepo;
@@ -32,10 +33,10 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public CommentResponseDto addComment(CommentCreateDto commentDto) {
         User user = userRepo.findByUsername(commentDto.getUsername())
-                .orElseThrow();
+                .orElseThrow(() -> new ResourceNotFoundException("User", "username", commentDto.getUsername()));
 
         Post post = postRepo.findById(commentDto.getPostId())
-                .orElseThrow();
+                .orElseThrow(() -> new ResourceNotFoundException("Post", "id", commentDto.getPostId()));
 
         Comment comment = new Comment();
         comment.setContent(commentDto.getContent());

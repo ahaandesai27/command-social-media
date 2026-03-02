@@ -1,6 +1,8 @@
 package com.social.backend.services.impl;
 
 import com.social.backend.entities.User;
+import com.social.backend.exceptions.InvalidFollowOperationException;
+import com.social.backend.exceptions.ResourceNotFoundException;
 import com.social.backend.payloads.FollowDto;
 import com.social.backend.repositories.UserRepo;
 import com.social.backend.services.UserFollowService;
@@ -18,11 +20,18 @@ public class UserFollowServiceImpl implements UserFollowService {
     @Transactional      // replaces usage of .save()
     @Override
     public void followUser(FollowDto followDto) {
-        User followeeUser = this.userRepo.findByUsername(followDto.getFollowee()).orElseThrow();
-        User followerUser = this.userRepo.findByUsername(followDto.getFollower()).orElseThrow();
+        User followeeUser = this.userRepo.findByUsername(followDto.getFollowee())
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("User", "username", followDto.getFollowee())
+                );
+
+        User followerUser = this.userRepo.findByUsername(followDto.getFollower())
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("User", "username", followDto.getFollower())
+                );
 
         if (followerUser.equals(followeeUser)) {
-            throw new IllegalArgumentException("User cannot follow themselves!");
+            throw new InvalidFollowOperationException("User cannot follow themselves!");
         }
 
         boolean added = followerUser.getFollowingUsers().add(followeeUser);
@@ -35,11 +44,18 @@ public class UserFollowServiceImpl implements UserFollowService {
     @Transactional
     @Override
     public void unfollowUser(FollowDto followDto) {
-        User followeeUser = userRepo.findByUsername(followDto.getFollowee()).orElseThrow();
-        User followerUser = userRepo.findByUsername(followDto.getFollower()).orElseThrow();
+        User followeeUser = this.userRepo.findByUsername(followDto.getFollowee())
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("User", "username", followDto.getFollowee())
+                );
+
+        User followerUser = this.userRepo.findByUsername(followDto.getFollower())
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("User", "username", followDto.getFollower())
+                );
 
         if (followerUser.equals(followeeUser)) {
-            throw new IllegalArgumentException("User cannot unfollow themselves");
+            throw new InvalidFollowOperationException("User cannot unfollow themselves");
         }
 
         boolean removed = followerUser.getFollowingUsers().remove(followeeUser);

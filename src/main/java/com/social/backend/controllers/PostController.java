@@ -8,6 +8,7 @@ import com.social.backend.repositories.UserRepo;
 import com.social.backend.security.userdetails.CustomUserDetails;
 import com.social.backend.services.PostService;
 import com.social.backend.services.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +32,7 @@ public class PostController {
 
     @PostMapping
     public ResponseEntity<PostResponseDto> createPost(
-            @RequestBody PostCreateDto postDto
+            @Valid @RequestBody PostCreateDto postDto
     ) {
         PostResponseDto response = postService.createPost(postDto);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
@@ -40,7 +41,7 @@ public class PostController {
     @PatchMapping("/{postId}")
     public ResponseEntity<PostResponseDto> updatePost(
             @PathVariable Long postId,
-            @RequestBody PostUpdateDto postDto
+            @Valid @RequestBody PostUpdateDto postDto
     ) {
         PostResponseDto response = postService.updatePost(postId, postDto);
         return ResponseEntity.ok(response);

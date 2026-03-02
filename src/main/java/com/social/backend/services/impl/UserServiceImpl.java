@@ -2,6 +2,8 @@ package com.social.backend.services.impl;
 
 import com.social.backend.entities.Post;
 import com.social.backend.entities.User;
+import com.social.backend.exceptions.ConflictException;
+import com.social.backend.exceptions.ResourceNotFoundException;
 import com.social.backend.payloads.ProjectDto;
 import com.social.backend.payloads.user.UserCreateDto;
 import com.social.backend.payloads.user.UserResponseDto;
@@ -57,10 +59,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponseDto createUser(UserCreateDto userDto) {
         if (userRepo.existsByUsername(userDto.getUsername())) {
-            throw new ResponseStatusException(
-                    HttpStatus.CONFLICT,
-                    "Username already exists"
-            );
+            throw new ConflictException("User with given username already exists!");
         }
 
         User user = new User();
@@ -85,13 +84,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponseDto getUserByUsername(String username) {
-        User user = this.userRepo.findByUsername(username).orElseThrow();
+        User user = this.userRepo.findByUsername(username).orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
         return this.userToDto(user);
     }
 
     public UserResponseDto updateUser(UserUpdateDto userDto, Long userId) {
         User user = this.userRepo.findById(userId)
-                .orElseThrow();
+                .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
 
         // Map all fields from DTO to entity (overwrites everything)
         user.setName(userDto.getName());
@@ -107,7 +106,7 @@ public class UserServiceImpl implements UserService {
 
     public UserResponseDto partialUpdateUser(UserUpdateDto userDto, Long userId) {
         User user = this.userRepo.findById(userId)
-                .orElseThrow();
+                .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
 
         if (userDto.getName() != null) {
             user.setName(userDto.getName());
@@ -142,8 +141,10 @@ public class UserServiceImpl implements UserService {
     // Like and Dislike Post methods
     @Override
     public void likePost(Long userId, Long postId) {
-        User user = this.userRepo.findById(userId).orElseThrow();
-        Post post = this.postRepo.findById(postId).orElseThrow();
+        User user = this.userRepo.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
+        Post post = this.postRepo.findById(postId)
+                .orElseThrow(() -> new ResourceNotFoundException("Post", "id", postId));
 
         post.setLikes(post.getLikes() + 1);
         user.getLikedPosts().add(post);
@@ -152,8 +153,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void dislikePost(Long userId, Long postId) {
-        User user = this.userRepo.findById(userId).orElseThrow();
-        Post post = this.postRepo.findById(postId).orElseThrow();
+        User user = this.userRepo.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
+        Post post = this.postRepo.findById(postId)
+                .orElseThrow(() -> new ResourceNotFoundException("Post", "id", postId));
 
         post.setLikes(Math.max(0, post.getLikes() - 1));
         user.getLikedPosts().remove(post);

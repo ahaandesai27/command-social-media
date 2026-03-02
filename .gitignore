@@ -54,3 +54,5 @@ out/
 .vscode/
 
 src/main/java/resources/application.properties
+
+additions.txt

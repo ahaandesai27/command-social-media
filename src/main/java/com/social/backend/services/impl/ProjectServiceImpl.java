@@ -2,6 +2,7 @@ package com.social.backend.services.impl;
 
 import com.social.backend.entities.Project;
 import com.social.backend.entities.User;
+import com.social.backend.exceptions.ResourceNotFoundException;
 import com.social.backend.payloads.ProjectDto;
 import com.social.backend.repositories.ProjectRepo;
 import com.social.backend.repositories.UserRepo;
@@ -39,7 +40,7 @@ public class ProjectServiceImpl implements ProjectService {
         }
 
         User user = userRepo.findById(userId)
-                .orElseThrow(() -> new EntityNotFoundException("User does not exist"));
+                .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
 
         Project project = dtoToProject(projectDto);
         project.setUser(user);
@@ -55,7 +56,9 @@ public class ProjectServiceImpl implements ProjectService {
         }
 
         Project project = projectRepo.findById(projectId)
-                .orElseThrow(() -> new EntityNotFoundException("Project does not exist"));
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Project", "id", projectId)
+                );
         // do not update ID
         project.setName(projectDto.getName());
         project.setDescription(projectDto.getDescription());
@@ -72,7 +75,9 @@ public class ProjectServiceImpl implements ProjectService {
         }
 
         Project project = projectRepo.findById(projectId)
-                .orElseThrow(() -> new EntityNotFoundException("Project does not exist"));
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Project", "id", projectId)
+                );
 
         projectRepo.delete(project);
     }

@@ -2,6 +2,7 @@ package com.social.backend.services.impl;
 
 import com.social.backend.entities.Post;
 import com.social.backend.entities.User;
+import com.social.backend.exceptions.ResourceNotFoundException;
 import com.social.backend.payloads.comment.CommentResponseDto;
 import com.social.backend.payloads.post.PostCreateDto;
 import com.social.backend.payloads.post.PostResponseDto;
@@ -68,7 +69,8 @@ public class PostServiceImpl implements PostService {
         post.setTitle(postDto.getTitle());
         post.setDescription(postDto.getDescription());
 
-        User user = this.userRepo.findByUsername(postDto.getUsername()).orElseThrow();
+        User user = this.userRepo.findByUsername(postDto.getUsername())
+                        .orElseThrow(() -> new ResourceNotFoundException("User", "username", postDto.getUsername()));
         post.setUser(user);
 
         Post savedPost = postRepo.save(post);
@@ -78,7 +80,10 @@ public class PostServiceImpl implements PostService {
     @Override
     @Transactional
     public PostResponseDto updatePost(Long postId, PostUpdateDto postDto) {
-        Post existingPost = postRepo.findById(postId).orElseThrow(() -> new RuntimeException("Post not found"));
+        if (postId == null) {
+            throw new IllegalArgumentException("Post ID cannot be null!");
+        }
+        Post existingPost = postRepo.findById(postId).orElseThrow(() -> new ResourceNotFoundException("Post", "id", postId));
         if (postDto.getTitle() != null) {
             existingPost.setTitle(postDto.getTitle());
         }
