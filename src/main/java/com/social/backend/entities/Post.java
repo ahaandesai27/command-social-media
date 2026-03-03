@@ -25,11 +25,9 @@ public class Post {
     private Long id;
 
     // Descriptive fields
-    @FullTextField
     @Column(nullable = false, length=200)
     private String title;
 
-    @FullTextField
     @Column(nullable=false, length=1000)
     private String description;
 
