@@ -4,11 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.search.engine.backend.types.Sortable;
-import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
-import org.hibernate.search.mapper.pojo.mapping.definition.annotation.GenericField;
-import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
-import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexedEmbedded;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,7 +13,6 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-@Indexed
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -38,14 +32,12 @@ public class Post {
     private Integer dislikes = 0;
 
     @Column
-    @GenericField(sortable = Sortable.YES)
     private Date createdAt = new Date();
 
     // Relationships
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="user_id", nullable = false)
-    @IndexedEmbedded            // allows searching posts by user fields
     private User user;
 
     @OneToMany(

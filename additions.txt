@@ -1,4 +1,2 @@
-- Classes for different types of errors (in progress)
-- Remove Lucene search - use only postgres search
 - Add rate limiting
 - RBAC

@@ -2,6 +2,7 @@ package com.social.backend.controllers;
 
 import com.social.backend.payloads.post.PostResponseDto;
 import com.social.backend.services.SearchService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,11 +11,8 @@ import java.util.List;
 @RequestMapping("/api/search")
 public class SearchController {
 
-    private final SearchService searchService;
-
-    public SearchController(SearchService searchService) {
-        this.searchService = searchService;
-    }
+    @Autowired
+    private SearchService searchService;
 
     @GetMapping("/users")
     public List<String> searchUsers(

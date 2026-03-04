@@ -4,9 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.search.engine.backend.types.Projectable;
-import org.hibernate.search.engine.backend.types.Sortable;
-import org.hibernate.search.mapper.pojo.mapping.definition.annotation.*;
 
 import java.util.*;
 
@@ -20,7 +17,6 @@ import java.util.*;
                 @UniqueConstraint(columnNames = "username")
         }
 )
-@Indexed
 public class User {
 
     @Id
