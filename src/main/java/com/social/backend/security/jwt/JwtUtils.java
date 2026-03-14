@@ -49,6 +49,7 @@ public class JwtUtils {
     public String generateToken(CustomUserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("userId", userDetails.getId());
+        claims.put("roles", userDetails.getRoles());
         return createToken(claims, userDetails.getUsername());
         // when token is decoded, claims will have the actual fields
     }

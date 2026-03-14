@@ -12,6 +12,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,6 +32,7 @@ public class PostController {
     private UserRepo userRepo;
 
     @PostMapping
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public ResponseEntity<PostResponseDto> createPost(
             @Valid @RequestBody PostCreateDto postDto
     ) {
@@ -39,6 +41,7 @@ public class PostController {
     }
 
     @PatchMapping("/{postId}")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public ResponseEntity<PostResponseDto> updatePost(
             @PathVariable Long postId,
             @Valid @RequestBody PostUpdateDto postDto
@@ -46,6 +49,7 @@ public class PostController {
         PostResponseDto response = postService.updatePost(postId, postDto);
         return ResponseEntity.ok(response);
     }
+
     @GetMapping
     public ResponseEntity<List<PostResponseDto>> getPosts(
             @AuthenticationPrincipal CustomUserDetails userDetails,
@@ -76,22 +80,29 @@ public class PostController {
 
     @DeleteMapping("/{postId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public void deletePost(@PathVariable Long postId) {
         postService.deletePost(postId);
     }
 
     @PostMapping("/{userId}/like/{postId}")
+    @PreAuthorize("hasRole('ADMIN') or #userDetails != null and #userDetails.id == #userId")
     public ResponseEntity<String> likePost(
             @PathVariable Long userId,
-            @PathVariable Long postId) {
+            @PathVariable Long postId,
+            @AuthenticationPrincipal CustomUserDetails userDetails
+    ) {
         userService.likePost(userId, postId);
         return ResponseEntity.ok("Post liked");
     }
 
     @PostMapping("/{userId}/dislike/{postId}")
+    @PreAuthorize("hasRole('ADMIN') or #userDetails != null and #userDetails.id == #userId")
     public ResponseEntity<String> dislikePost(
             @PathVariable Long userId,
-            @PathVariable Long postId) {
+            @PathVariable Long postId,
+            @AuthenticationPrincipal CustomUserDetails userDetails
+    ) {
         userService.dislikePost(userId, postId);
         return ResponseEntity.ok("Post disliked");
     }

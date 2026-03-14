@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -25,6 +26,7 @@ import java.util.List;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfig {
 
     @Autowired
@@ -55,7 +57,17 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())                       // disable CSRFs for stateless
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**", "/api/health").permitAll()
-                        .anyRequest().authenticated()    // IMP: Change to .authenticated() before deployment
+
+                        // allow read-only endpoints without auth
+                        .requestMatchers(org.springframework.http.HttpMethod.GET,
+                                "/api/users/**",
+                                "/api/posts/**",
+                                "/api/comments/**",
+                                "/api/search/**"
+                        ).permitAll()
+
+                        // everything else requires authentication; fine-grained RBAC is via @PreAuthorize
+                        .anyRequest().authenticated()
                 )                                                                              // api/auth/* like login , register are permitted by all, rest must be authenticated
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

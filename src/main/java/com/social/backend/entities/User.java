@@ -83,6 +83,11 @@ public class User {
     )
     private Set<User> followingUsers = new HashSet<>();
 
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "role", nullable = false)
+    private Set<String> roles = new HashSet<>();
+
     @PrePersist
     protected void onCreate() {
         // cant just set values in field declarations because JPA might override them
@@ -95,6 +100,12 @@ public class User {
         }
         if (this.following == null) {
             this.following = 0;
+        }
+        if (this.roles == null) {
+            this.roles = new HashSet<>();
+        }
+        if (this.roles.isEmpty()) {
+            this.roles.add("ROLE_USER");
         }
     }
 }
