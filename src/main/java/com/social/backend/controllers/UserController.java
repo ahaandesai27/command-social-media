@@ -47,6 +47,7 @@ public class UserController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN') or #userDetails != null and #userDetails.id == #id")
+    // this means either admin can update or self user can update
     public ResponseEntity<UserResponseDto> updateUserById(
             @PathVariable Long id,
             @RequestBody UserUpdateDto userDto,

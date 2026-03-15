@@ -7,6 +7,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.io.IOException;
 
@@ -19,13 +21,20 @@ public class RateLimitingFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
-        if (rateLimiter.consumeToken()) {
+        String ip = request.getRemoteAddr();
+        String username = "anonymous";
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null && auth.isAuthenticated() && auth.getName() != null) {
+            username = auth.getName();
+        }
+
+        if (rateLimiter.consumeToken(ip, username)) {
             filterChain.doFilter(request, response);
         } else {
             response.setStatus(429);
             response.setContentType("application/json");
             response.getWriter().write("{\"error\": \"Too many requests\"}");
         }
-
     }
+
 }
